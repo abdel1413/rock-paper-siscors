@@ -18,13 +18,13 @@ let computerScore = 0;
 function getRoundResults(userOption) {
   const computerResult = getRandomComputerResult();
   if (hadPlayerWonTheRound(userOption, computerResult)) {
-    playerScore += 1;
-    return `Player wins! ${userOption} beats ${computerResult}`;
+    playerScore++;
+    return `Player wins! ( ${userOption} beats ${computerResult} )`;
   } else if (userOption === computerResult) {
     return `It's a tie both choose ${userOption}`;
   } else {
-    computerScore += 1;
-    return `Compuert wins! ${computerResult} beats ${userOption}`;
+    computerScore++;
+    return `Compuert wins! ( ${computerResult} beats ${userOption} )`;
   }
 }
 
@@ -39,11 +39,14 @@ function showResults(userOption) {
   roundResultMsg.innerText = getRoundResults(userOption);
   playerScoreSpanElement.innerText = playerScore;
   computerScoreSpanElement.innerText = computerScore;
-  winnerMsg.innerText = `${
-    playerScore === 3 ? "Player" : "Computer"
-  } has won the game`;
-  resetGameBtn.style.display = "block";
-  optionContainer.style.display = "none";
+  if (playerScore === 3 || computerScore === 3) {
+    winnerMsg.innerText = `${
+      playerScore === 3 ? "Player" : "Computer"
+    } has won the game`;
+    winnerMsg.style.color = "green";
+    resetGameBtn.style.display = "block";
+    optionContainer.style.display = "none";
+  }
 }
 
 function resetGame() {
@@ -66,9 +69,9 @@ rockBtn.addEventListener("click", function () {
   showResults("Rock");
 });
 
-paperBtn.addEventListener("click", () => {
+paperBtn.addEventListener("click", function () {
   showResults("Paper");
 });
-scissorsBtn.addEventListener("click", () => {
-  showResults("scissors");
+scissorsBtn.addEventListener("click", function () {
+  showResults("Scissors");
 });
